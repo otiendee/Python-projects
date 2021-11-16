@@ -1,0 +1,37 @@
+!pip install yfinance
+#!pip install pandas
+
+import yfinance as yf
+import pandas as pd
+
+#Using the `Ticker` module we can create an object that will allow us to access functions to extract data. To do this we need to provide the ticker symbol for the stock, here the company is Apple and the ticker symbol is `AAPL`.
+
+apple = yf.Ticker("AAPL")
+
+#Using the attribute info we can extract information about the stock as a Python dictionary.
+
+apple_info=apple.info
+apple_info
+
+#We can get the 'country' using the key country
+apple_info['country']
+
+
+#extracting share price
+apple_share_price_data = apple.history(period="max")
+
+#The format that the data is returned in is a Pandas DataFrame. With the `Date` as the index the share `Open`, `High`, `Low`, `Close`, `Volume`, and `Stock Splits` are given for each day.
+apple_share_price_data.head()
+
+#We can reset the index of the DataFrame with the `reset_index` function. We also set the `inplace` paramter to `True` so the change takes place to the DataFrame itself.
+
+apple_share_price_data.reset_index(inplace=True)
+
+#We can plot the `Open` price against the `Date`:
+apple_share_price_data.plot(x="Date", y="Open")
+
+#extracting dividends
+apple.dividends
+
+#dividends plot
+apple.dividends.plot()
